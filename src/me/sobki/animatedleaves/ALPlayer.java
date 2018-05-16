@@ -90,10 +90,6 @@ public class ALPlayer {
 				}
 			}
 		} else {
-			if (this.y - newY > 1) {
-				System.out.println("Difference > 1");
-				System.out.println("oldY = " + this.y + ", newY = " + newY + ", oldMin = " + this.minY + ", newMin = " + minY + " oldMax = " + this.maxY + ", oldMax = " + maxY);
-			}
 			for (int x = minX; x <= maxX; x++) {
 				for (int z = minZ; z <= maxZ; z++) {
 					Block oldblock = player.getWorld().getBlockAt(x, this.maxY, z);
