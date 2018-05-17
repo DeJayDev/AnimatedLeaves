@@ -1,0 +1,15 @@
+# General configuration for particle information
+Particle:
+
+  # The radius around a player particles should be rendered (in blocks)
+  Radius: 24
+  
+  # The scale factor used to determine how many leaf blocks should display an animation per interval
+  # Increase this value to have more leaf blocks play effects per interval
+  Scale: 0.1
+  
+  # The amount of particles to display
+  Amount: 1
+  
+  # The interval (in ticks) between displaying animation effects
+  Interval: 4

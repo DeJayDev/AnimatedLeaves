@@ -11,6 +11,7 @@ public class AnimatedLeaves extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		plugin = this;
+		saveDefaultConfig();
 		aHandler = new AnimationHandler(this);
 	}
 

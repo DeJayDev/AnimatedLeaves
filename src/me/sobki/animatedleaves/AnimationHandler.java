@@ -32,24 +32,27 @@ public class AnimationHandler implements Listener, Runnable {
 	/*
 	 * The radius around the player particles will be displayed from
 	 */
-	private final int PARTICLE_RADIUS = 24;
+	private final int PARTICLE_RADIUS;
 	/*
 	 * The factor used to scale the probability that a nearby leaf will display a particle
 	 */
-	private final float PARTICLE_SCALE = 0.05F;
+	private final float PARTICLE_SCALE;
 	/*
-	 * The amount of particles to be displaye
+	 * The amount of particles to be displayed
 	 */
-	private final int PARTICLE_AMOUNT = 1;
+	private final int PARTICLE_AMOUNT;
 	/*
 	 * The amount of ticks between each particle update
 	 */
-	private final long PARTICLE_INTERVAL = 4L;
+	private final long PARTICLE_INTERVAL;
 
 	public AnimationHandler(AnimatedLeaves plugin) {
+		this.PARTICLE_RADIUS = plugin.getConfig().getInt("Particle.Radius");
+		this.PARTICLE_SCALE = (float) plugin.getConfig().getDouble("Particle.Scale");
+		this.PARTICLE_AMOUNT = plugin.getConfig().getInt("Particle.Amount");
+		this.PARTICLE_INTERVAL = plugin.getConfig().getLong("Particle.Interval");
 		plugin.getServer().getScheduler().runTaskTimer(plugin, this, PARTICLE_INTERVAL, PARTICLE_INTERVAL);
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
-
 		plugin.getServer().getOnlinePlayers().forEach(player -> {
 			PLAYERS.put(player, new ALPlayer(player, PARTICLE_RADIUS));
 		});
