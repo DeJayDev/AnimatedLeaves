@@ -8,7 +8,7 @@ commands:
         usage: /al
         description: General help command.
     altoggle:
-        usage: /altoggle [all/<player>]
+        usage: /altoggle [--all/<player>]
         description: Toggle AnimatedLeaves effects for the sender (or all/target).
     alreload:
         usage: /alreload
@@ -20,7 +20,6 @@ permissions:
         children:
             animatedleaves.help: true
             animatedleaves.toggle: true
-            animatedleaves.help: true
     animatedleaves.admin:
         default: op
         description: Grants admin access to Animated Leaves.

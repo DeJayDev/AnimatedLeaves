@@ -30,7 +30,7 @@ public class ToggleCommand implements CommandExecutor {
 			if (args.length < 1) {
 				toggle(player, player);
 			} else {
-				if (args[0].equalsIgnoreCase("all")) {
+				if (args[0].equalsIgnoreCase("--all")) {
 					if (!player.hasPermission("animatedleaves.toggle.all")) {
 						sender.sendMessage(CommandMessage.PREFIX.format() + CommandMessage.INSUFFICIENT_PERMISSION.format());
 						return true;
