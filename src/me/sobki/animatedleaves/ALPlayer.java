@@ -11,6 +11,7 @@ public class ALPlayer {
 
 	private Player player;
 
+	private boolean enabled;
 	private int radius;
 	private int x, y, z;
 	private int minX, minY, minZ;
@@ -19,6 +20,7 @@ public class ALPlayer {
 
 	public ALPlayer(Player player, int radius) {
 		this.player = player;
+		this.enabled = true;
 		this.radius = radius;
 		this.x = player.getLocation().getBlockX();
 		this.y = player.getLocation().getBlockY();
@@ -129,6 +131,14 @@ public class ALPlayer {
 		this.z = newZ;
 		this.minZ = minZ;
 		this.maxZ = maxZ;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	public Set<Block> getLeaves() {

@@ -16,6 +16,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -23,6 +24,7 @@ import org.bukkit.event.block.LeavesDecayEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.scheduler.BukkitTask;
 
 import me.sobki.animatedleaves.ParticleEffect.BlockData;
 
@@ -46,12 +48,14 @@ public class AnimationHandler implements Listener, Runnable {
 	 */
 	private final long PARTICLE_INTERVAL;
 
+	private BukkitTask task;
+
 	public AnimationHandler(AnimatedLeaves plugin) {
 		this.PARTICLE_RADIUS = plugin.getConfig().getInt("Particle.Radius");
 		this.PARTICLE_SCALE = (float) plugin.getConfig().getDouble("Particle.Scale");
 		this.PARTICLE_AMOUNT = plugin.getConfig().getInt("Particle.Amount");
 		this.PARTICLE_INTERVAL = plugin.getConfig().getLong("Particle.Interval");
-		plugin.getServer().getScheduler().runTaskTimer(plugin, this, PARTICLE_INTERVAL, PARTICLE_INTERVAL);
+		this.task = plugin.getServer().getScheduler().runTaskTimer(plugin, this, PARTICLE_INTERVAL, PARTICLE_INTERVAL);
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 		plugin.getServer().getOnlinePlayers().forEach(player -> {
 			PLAYERS.put(player, new ALPlayer(player, PARTICLE_RADIUS));
@@ -62,6 +66,9 @@ public class AnimationHandler implements Listener, Runnable {
 	@Override
 	public void run() {
 		PLAYERS.forEach((bukkitPlayer, player) -> {
+			if (!player.isEnabled()) {
+				return;
+			}
 			List<Block> leaves = new ArrayList<>(player.getLeaves());
 			if (leaves.size() == 0) {
 				return;
@@ -73,10 +80,16 @@ public class AnimationHandler implements Listener, Runnable {
 				int index = (int) (Math.random() * (leaves.size() - 1));
 				Block leaf = leaves.get(index);
 				Location centre = leaf.getLocation().add(0.5, 0.5, 0.5);
-				ParticleEffect.BLOCK_DUST.display(new BlockData(leaf.getType(), leaf.getData()), (float) (Math.random() * 0.5), (float) (Math.random() * 0.5), (float) (Math.random() * 0.5), 0.05F, PARTICLE_AMOUNT, centre, PARTICLE_RADIUS);
+				ParticleEffect.BLOCK_DUST.display(new BlockData(leaf.getType(), leaf.getData()), (float) (Math.random() * 0.5), (float) (Math.random() * 0.5), (float) (Math.random() * 0.5), 0.05F, PARTICLE_AMOUNT, centre, bukkitPlayer);
 				leaves.remove(leaf);
 			}
 		});
+	}
+
+	public void unload() {
+		HandlerList.unregisterAll(this);
+		task.cancel();
+		PLAYERS.clear();
 	}
 
 	@EventHandler

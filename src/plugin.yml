@@ -3,3 +3,22 @@ version: ${project.version}
 main: me.sobki.animatedleaves.AnimatedLeaves
 author: Sobki
 description: Lightweight plugin which adds a particle animation to all leaf blocks.
+commands:
+    altoggle:
+        usage: /altoggle [player]
+        description: Toggle AnimatedLeaves effects for the sender (or target).
+    alreload:
+        usage: /alreload
+        description: Reload AnimatedLeaves configuration.
+permissions:
+    animatedleaves.default:
+        default: true
+        description: Grants access to default permissions.
+        children:
+            animatedleaves.toggle: true
+    animatedleaves.admin:
+        default: op
+        description: Grants admin access to Animated Leaves.
+        children:
+            animatedleaves.toggle.other: true
+            animatedleaves.toggle.reload: true
