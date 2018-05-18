@@ -221,7 +221,7 @@ public class AnimationHandler implements Listener, Runnable {
 		return entities;
 	}
 
-	public static void displayColoredParticle(Location loc, ParticleEffect type, String hexVal, float xOffset, float yOffset, float zOffset) {
+	public static void displayColoredParticle(Location loc, ParticleEffect type, String hexVal, float xOffset, float yOffset, float zOffset, Player... players) {
 		int r = 0;
 		int g = 0;
 		int b = 0;
@@ -248,15 +248,15 @@ public class AnimationHandler implements Listener, Runnable {
 		        && type != ParticleEffect.MOB_SPELL_AMBIENT) {
 			type = ParticleEffect.RED_DUST;
 		}
-		type.display(red, green, blue, 1F, 0, loc, 255.0);
+		type.display(red, green, blue, 1F, 0, loc, players);
 	}
 
-	public static void displayColoredParticle(Location loc, String hexVal) {
-		displayColoredParticle(loc, ParticleEffect.RED_DUST, hexVal, 0, 0, 0);
+	public static void displayColoredParticle(Location loc, String hexVal, Player... players) {
+		displayColoredParticle(loc, ParticleEffect.RED_DUST, hexVal, 0, 0, 0, players);
 	}
 
-	public static void displayColoredParticle(Location loc, String hexVal, float xOffset, float yOffset, float zOffset) {
-		displayColoredParticle(loc, ParticleEffect.RED_DUST, hexVal, xOffset, yOffset, zOffset);
+	public static void displayColoredParticle(Location loc, String hexVal, float xOffset, float yOffset, float zOffset, Player... players) {
+		displayColoredParticle(loc, ParticleEffect.RED_DUST, hexVal, xOffset, yOffset, zOffset, players);
 	}
 
 	public boolean isEnabledAll() {
