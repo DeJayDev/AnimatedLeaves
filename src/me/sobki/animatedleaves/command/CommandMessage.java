@@ -10,7 +10,10 @@ public class CommandMessage {
 	public static final CommandMessage INSUFFICIENT_PERMISSION = new CommandMessage("&cYou do not have permission to perform this action.");
 	public static final CommandMessage PLAYER_NOT_FOUND = new CommandMessage("&cPlayer &4%player% &cnot found.");
 
+	public static final CommandMessage HELP_TITLE = new CommandMessage("&aAnimatedLeaves help");
+	public static final CommandMessage[] HELP = new CommandMessage[] { new CommandMessage("&2- &f/altoggle [all/<player>] &7Toggle AnimatedLeaves"), new CommandMessage("&2- &f/alreload &7Reload configuration") };
 	public static final CommandMessage TOGGLED = new CommandMessage("&7Animated leaves toggled %enabled%&7.");
+	public static final CommandMessage TOGGLED_ALL = new CommandMessage("&7Animated leaves toggled %enabled%&7 for &fALL &7players by &f%player%&7.");
 	public static final CommandMessage TOGGLED_OTHER = new CommandMessage("&7Animated leaves toggled %enabled% &7by &f%player%&7.");
 	public static final CommandMessage TOGGLED_OTHER_SENDER = new CommandMessage("&7Animated leaves toggled %enabled% &7for &f%player%&7.");
 	public static final CommandMessage RELOADED = new CommandMessage("&7Config reloaded.");

@@ -1,5 +1,6 @@
 package me.sobki.animatedleaves.command;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -29,6 +30,17 @@ public class ToggleCommand implements CommandExecutor {
 			if (args.length < 1) {
 				toggle(player, player);
 			} else {
+				if (args[0].equalsIgnoreCase("all")) {
+					if (!player.hasPermission("animatedleaves.toggle.all")) {
+						sender.sendMessage(CommandMessage.PREFIX.format() + CommandMessage.INSUFFICIENT_PERMISSION.format());
+						return true;
+					}
+					boolean enabledAll = !AnimatedLeaves.plugin.getAnimationHandler().isEnabledAll();
+					AnimatedLeaves.plugin.getAnimationHandler().setEnabledAll(enabledAll);
+					String toggle = enabledAll ? "&a&lON" : "&c&lOFF";
+					Bukkit.broadcastMessage(CommandMessage.PREFIX.format() + CommandMessage.TOGGLED_ALL.replace("%enabled%", toggle).replace("%player%", player.getName()).format());
+					return true;
+				}
 				if (!player.hasPermission("animatedleaves.toggle.other")) {
 					sender.sendMessage(CommandMessage.PREFIX.format() + CommandMessage.INSUFFICIENT_PERMISSION.format());
 					return true;

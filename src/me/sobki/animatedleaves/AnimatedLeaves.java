@@ -2,6 +2,7 @@ package me.sobki.animatedleaves;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import me.sobki.animatedleaves.command.ALCommand;
 import me.sobki.animatedleaves.command.ReloadCommand;
 import me.sobki.animatedleaves.command.ToggleCommand;
 
@@ -17,6 +18,7 @@ public class AnimatedLeaves extends JavaPlugin {
 		saveDefaultConfig();
 		aHandler = new AnimationHandler(this);
 
+		getCommand("al").setExecutor(new ALCommand());
 		getCommand("altoggle").setExecutor(new ToggleCommand());
 		getCommand("alreload").setExecutor(new ReloadCommand());
 	}

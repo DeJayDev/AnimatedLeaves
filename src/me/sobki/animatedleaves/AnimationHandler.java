@@ -49,6 +49,7 @@ public class AnimationHandler implements Listener, Runnable {
 	private final long PARTICLE_INTERVAL;
 
 	private BukkitTask task;
+	private boolean enabledAll;
 
 	public AnimationHandler(AnimatedLeaves plugin) {
 		this.PARTICLE_RADIUS = plugin.getConfig().getInt("Particle.Radius");
@@ -56,6 +57,7 @@ public class AnimationHandler implements Listener, Runnable {
 		this.PARTICLE_AMOUNT = plugin.getConfig().getInt("Particle.Amount");
 		this.PARTICLE_INTERVAL = plugin.getConfig().getLong("Particle.Interval");
 		this.task = plugin.getServer().getScheduler().runTaskTimer(plugin, this, PARTICLE_INTERVAL, PARTICLE_INTERVAL);
+		this.enabledAll = true;
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 		plugin.getServer().getOnlinePlayers().forEach(player -> {
 			PLAYERS.put(player, new ALPlayer(player, PARTICLE_RADIUS));
@@ -65,6 +67,9 @@ public class AnimationHandler implements Listener, Runnable {
 	@SuppressWarnings("deprecation")
 	@Override
 	public void run() {
+		if (!enabledAll) {
+			return;
+		}
 		PLAYERS.forEach((bukkitPlayer, player) -> {
 			if (!player.isEnabled()) {
 				return;
@@ -252,6 +257,14 @@ public class AnimationHandler implements Listener, Runnable {
 
 	public static void displayColoredParticle(Location loc, String hexVal, float xOffset, float yOffset, float zOffset) {
 		displayColoredParticle(loc, ParticleEffect.RED_DUST, hexVal, xOffset, yOffset, zOffset);
+	}
+
+	public boolean isEnabledAll() {
+		return enabledAll;
+	}
+
+	public void setEnabledAll(boolean enabledAll) {
+		this.enabledAll = enabledAll;
 	}
 
 	public Map<Player, ALPlayer> getPlayers() {
