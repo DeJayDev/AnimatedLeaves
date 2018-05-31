@@ -154,7 +154,8 @@ public class AnimationHandler implements Listener, Runnable {
 		Block block = event.getBlock();
 		getEntitiesAroundPoint(block.getLocation(), PARTICLE_RADIUS).stream().filter(entity -> entity instanceof Player).forEach(entity -> {
 			ALPlayer player = PLAYERS.get((Player) entity);
-			player.removeBlock(block);
+			if (player!=null)
+				player.removeBlock(block);
 		});
 	}
 
@@ -166,7 +167,8 @@ public class AnimationHandler implements Listener, Runnable {
 		}
 		getEntitiesAroundPoint(block.getLocation(), PARTICLE_RADIUS).stream().filter(entity -> entity instanceof Player).forEach(entity -> {
 			ALPlayer player = PLAYERS.get((Player) entity);
-			player.addBlock(block);
+			if (player!=null)
+				player.addBlock(block);
 		});
 	}
 
@@ -178,7 +180,8 @@ public class AnimationHandler implements Listener, Runnable {
 		}
 		getEntitiesAroundPoint(block.getLocation(), PARTICLE_RADIUS).stream().filter(entity -> entity instanceof Player).forEach(entity -> {
 			ALPlayer player = PLAYERS.get((Player) entity);
-			player.removeBlock(block);
+			if (player!=null)
+				player.removeBlock(block);
 		});
 	}
 
