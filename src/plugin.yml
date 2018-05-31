@@ -20,6 +20,7 @@ permissions:
         children:
             animatedleaves.help: true
             animatedleaves.toggle: true
+            animatedleaves.see: true
     animatedleaves.admin:
         default: op
         description: Grants admin access to Animated Leaves.
