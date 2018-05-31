@@ -16,6 +16,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -63,7 +64,7 @@ public class AnimationHandler implements Listener, Runnable {
 			PLAYERS.put(player, new ALPlayer(player, PARTICLE_RADIUS));
 		});
 	}
-
+	private final static String SEE_LEAVES_FALL_PERMISSION = "animatedleaves.see";
 	@SuppressWarnings("deprecation")
 	@Override
 	public void run() {
@@ -71,7 +72,7 @@ public class AnimationHandler implements Listener, Runnable {
 			return;
 		}
 		PLAYERS.forEach((bukkitPlayer, player) -> {
-			if (!player.isEnabled()) {
+			if (!player.isEnabled() || !player.hasPermission(SEE_LEAVES_FALL_PERMISSION)) {
 				return;
 			}
 			List<Block> leaves = new ArrayList<>(player.getLeaves());
@@ -97,17 +98,17 @@ public class AnimationHandler implements Listener, Runnable {
 		PLAYERS.clear();
 	}
 
-	@EventHandler
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
 	public void onJoin(PlayerJoinEvent event) {
 		PLAYERS.put(event.getPlayer(), new ALPlayer(event.getPlayer(), PARTICLE_RADIUS));
 	}
 
-	@EventHandler
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
 	public void onQuit(PlayerQuitEvent event) {
 		PLAYERS.remove(event.getPlayer());
 	}
 
-	@EventHandler
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
 	public void onMove(PlayerMoveEvent event) {
 		Location from = event.getFrom();
 		Location to = event.getTo();
@@ -148,7 +149,7 @@ public class AnimationHandler implements Listener, Runnable {
 		}
 	}
 
-	@EventHandler
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
 	public void onDecay(LeavesDecayEvent event) {
 		Block block = event.getBlock();
 		getEntitiesAroundPoint(block.getLocation(), PARTICLE_RADIUS).stream().filter(entity -> entity instanceof Player).forEach(entity -> {
@@ -157,7 +158,7 @@ public class AnimationHandler implements Listener, Runnable {
 		});
 	}
 
-	@EventHandler
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
 	public void onPlace(BlockPlaceEvent event) {
 		Block block = event.getBlockPlaced();
 		if (block.getType() != Material.LEAVES && block.getType() != Material.LEAVES_2) {
@@ -169,7 +170,7 @@ public class AnimationHandler implements Listener, Runnable {
 		});
 	}
 
-	@EventHandler
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
 	public void onBreak(BlockBreakEvent event) {
 		Block block = event.getBlock();
 		if (block.getType() != Material.LEAVES && block.getType() != Material.LEAVES_2) {
@@ -270,5 +271,4 @@ public class AnimationHandler implements Listener, Runnable {
 	public Map<Player, ALPlayer> getPlayers() {
 		return PLAYERS;
 	}
-
 }
