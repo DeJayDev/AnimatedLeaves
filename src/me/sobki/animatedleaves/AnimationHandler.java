@@ -72,7 +72,7 @@ public class AnimationHandler implements Listener, Runnable {
 			return;
 		}
 		PLAYERS.forEach((bukkitPlayer, player) -> {
-			if (!player.isEnabled() || !player.hasPermission(SEE_LEAVES_FALL_PERMISSION)) {
+			if (!player.isEnabled() || !bukkitPlayer.hasPermission(SEE_LEAVES_FALL_PERMISSION)) {
 				return;
 			}
 			List<Block> leaves = new ArrayList<>(player.getLeaves());
